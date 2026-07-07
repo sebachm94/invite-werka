@@ -1,0 +1,14 @@
+/* Tu są tylko animacje i drobne efekty. Główne style są w css/style.css. */
+.loading{
+  margin-top:8px;
+  padding:7px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.72);
+  color:#7d4acd;
+  font-size:13px;
+  font-weight:800;
+  box-shadow:0 12px 28px rgba(28,10,62,.18);
+}
+.invite-box img{opacity:.98;transition:opacity .25s ease,transform .25s ease}
+.invite-box img:not(.ready){opacity:.72;transform:scale(.985)}
+@media(prefers-reduced-motion:reduce){.loading,.invite-box img{transition:none!important}}

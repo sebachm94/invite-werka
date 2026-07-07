@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Przekierowanie…</title>
+</head>
+<body>
+<script>
+(function(){
+  // Dla GitHub Pages: pozwala używać linków typu
+  // https://twoj-login.github.io/invite-werka/kacper
+  // zamiast ?guest=kacper. Standardowo polecam jednak ?guest=kacper.
+  var repo = '/invite-werka/';
+  var path = location.pathname;
+  var guest = '';
+  if (path.indexOf(repo) === 0) guest = path.slice(repo.length).split('/')[0];
+  guest = guest.replace(/[^a-zA-Z0-9_\-ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g, '');
+  var target = repo + (guest ? '?guest=' + encodeURIComponent(guest) : '');
+  location.replace(target);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "Magiczne zaproszenie Werki",
+  "short_name": "Zaproszenie",
+  "start_url": "/invite-werka/",
+  "display": "standalone",
+  "background_color": "#b98df7",
+  "theme_color": "#b98df7",
+  "icons": [
+    { "src": "assets/unicorn-small.png", "sizes": "192x192", "type": "image/png" }
+  ]
+}

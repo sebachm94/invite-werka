@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#b98df7" />
+  <title>Magiczne zaproszenie</title>
+  <meta name="description" content="Otwórz magiczną kopertę i zobacz zaproszenie na urodziny Werki." />
+  <meta property="og:title" content="Magiczne zaproszenie od Werki" />
+  <meta property="og:description" content="Kliknij, aby odkryć magiczne zaproszenie." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="zaproszenie.png" />
+  <link rel="icon" href="assets/unicorn-small.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <img class="asset rainbow" data-depth="0.035" src="assets/rainbow-soft.png" alt="" onerror="this.remove()" />
+    <img class="asset castle" data-depth="0.018" src="assets/castle.png" alt="" onerror="this.remove()" />
+
+    <img class="asset cloud cloud-a" data-depth="0.028" src="assets/cloud-soft.png" alt="" onerror="this.remove()" />
+    <img class="asset cloud cloud-b" data-depth="0.022" src="assets/cloud-blue.png" alt="" onerror="this.remove()" />
+    <img class="asset cloud cloud-c" data-depth="0.032" src="assets/cloud-soft.png" alt="" onerror="this.remove()" />
+
+    <img class="asset unicorn unicorn-left" data-depth="0.055" src="assets/unicorn-left.png" alt="" onerror="this.remove()" />
+    <img class="asset unicorn unicorn-running" data-depth="0.05" src="assets/unicorn-running.png" alt="" onerror="this.remove()" />
+    <img class="asset unicorn unicorn-sitting" data-depth="0.04" src="assets/unicorn-sitting.png" alt="" onerror="this.remove()" />
+    <img class="asset unicorn unicorn-jumping" data-depth="0.06" src="assets/unicorn-jumping.png" alt="" onerror="this.remove()" />
+
+    <img class="asset star star-1" data-depth="0.045" src="assets/star-soft.png" alt="" onerror="this.remove()" />
+    <img class="asset star star-2" data-depth="0.052" src="assets/star-small.png" alt="" onerror="this.remove()" />
+    <img class="asset star star-3" data-depth="0.04" src="assets/star-soft.png" alt="" onerror="this.remove()" />
+    <img class="asset star star-4" data-depth="0.055" src="assets/star-small.png" alt="" onerror="this.remove()" />
+    <img class="asset star star-5" data-depth="0.035" src="assets/star-soft.png" alt="" onerror="this.remove()" />
+  </div>
+
+  <div id="sparkles" aria-hidden="true"></div>
+
+  <main class="stage">
+    <section class="card-wrap">
+      <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Otwórz zaproszenie">
+        <div class="env-back"></div>
+        <div class="flap"></div>
+        <div class="env-left"></div>
+        <div class="env-right"></div>
+        <div class="env-front"></div>
+        <div class="seal">💖</div>
+        <div class="magic-text">✨ Kliknij, aby odkryć magiczne zaproszenie ✨</div>
+
+        <div class="confetti" aria-hidden="true">
+          <i class="piece" style="--x:-210px;--y:-150px;--r:-380deg"></i>
+          <i class="piece" style="--x:-160px;--y:-210px;--r:260deg;animation-delay:40ms"></i>
+          <i class="piece" style="--x:-105px;--y:-170px;--r:-240deg;animation-delay:80ms"></i>
+          <i class="piece" style="--x:-55px;--y:-230px;--r:430deg;animation-delay:20ms"></i>
+          <i class="piece" style="--x:10px;--y:-190px;--r:320deg;animation-delay:65ms"></i>
+          <i class="piece" style="--x:70px;--y:-235px;--r:-300deg;animation-delay:35ms"></i>
+          <i class="piece" style="--x:130px;--y:-185px;--r:390deg;animation-delay:95ms"></i>
+          <i class="piece" style="--x:190px;--y:-145px;--r:-260deg;animation-delay:15ms"></i>
+          <i class="piece" style="--x:-230px;--y:-55px;--r:300deg;animation-delay:120ms"></i>
+          <i class="piece" style="--x:-135px;--y:-80px;--r:-330deg;animation-delay:55ms"></i>
+          <i class="piece" style="--x:-30px;--y:-105px;--r:240deg;animation-delay:105ms"></i>
+          <i class="piece" style="--x:48px;--y:-92px;--r:-400deg;animation-delay:75ms"></i>
+          <i class="piece" style="--x:145px;--y:-70px;--r:270deg;animation-delay:45ms"></i>
+          <i class="piece" style="--x:220px;--y:-45px;--r:360deg;animation-delay:100ms"></i>
+        </div>
+
+        <svg class="ribbon-burst" viewBox="0 0 560 330" aria-hidden="true">
+          <path d="M72 165 C35 120 82 78 47 37" stroke="#ffd86a"/>
+          <path d="M138 152 C94 91 175 63 143 18" stroke="#ff76bd"/>
+          <path d="M424 152 C468 91 389 63 417 18" stroke="#9edaf2"/>
+          <path d="M492 165 C525 115 477 78 514 37" stroke="#b78cff"/>
+        </svg>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="modal" aria-modal="true" role="dialog" aria-label="Zaproszenie">
+    <div class="invite-box">
+      <button class="close" id="close" aria-label="Zamknij">×</button>
+      <div class="greeting" id="greeting"></div>
+      <img id="inviteImg" src="zaproszenie.png" alt="Zaproszenie na urodziny" />
+      <div class="loading" id="loading">Ładuję zaproszenie…</div>
+      <div class="close-hint">Kliknij poza zaproszeniem albo ×, aby zamknąć</div>
+    </div>
+  </div>
+
+  <script src="js/invite-loader.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/envelope.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
