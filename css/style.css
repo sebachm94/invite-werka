@@ -201,3 +201,23 @@ body {
   .invite-box img { max-height: calc(100svh - 44px); max-width: 92vw; }
   .close-hint, .greeting { display: none !important; }
 }
+
+/* v16: strona nie pokazuje się, dopóki nie potwierdzimy, że zaproszenia/<guest>.png istnieje */
+body.app-loading .sky,
+body.app-loading #sparkles,
+body.app-loading .stage,
+body.app-loading .modal {
+  visibility: hidden;
+}
+body.app-loading::before {
+  content: "Sprawdzam zaproszenie…";
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+  color: #fff;
+  font-weight: 900;
+  font-size: 18px;
+  background: linear-gradient(135deg,#8b78e7 0%,#c99cf6 42%,#f7b5dc 78%,#9edaf2 100%);
+}
