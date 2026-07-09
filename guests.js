@@ -3,5 +3,11 @@
 // Przykład: "kacper" => /zaproszenia/kacper.png
 
 window.GUESTS = [
-  "demo"
+  "demo",
+  "kacper",
+  "waszak",
+  "mariuszki",
+  "klara",
+  "antek",
+  "franek"
 ];
