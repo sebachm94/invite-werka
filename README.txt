@@ -1,35 +1,19 @@
-V13 - instrukcja publikacji
+V15 - ładowanie zaproszeń po guest_id
 
-1. Wrzuć zawartość tego folderu do repozytorium GitHub: invite-werka
-   Ważne: index.html ma być w głównym katalogu repozytorium.
+Link:
+https://sebachm94.github.io/invite-werka/?guest=kacper
 
-2. W folderze assets/ wrzuć swoje grafiki dokładnie pod nazwami:
-   unicorn-running.png
-   unicorn-left.png
-   unicorn-sitting.png
-   unicorn-jumping.png
-   star-soft.png
-   star-small.png
-   rainbow-soft.png
-   cloud-soft.png
-   cloud-blue.png
-   castle.png
-   opcjonalnie: unicorn-small.png jako favicon/ikona
+Strona automatycznie szuka pliku:
+zaproszenia/kacper.png
 
-3. Imienne zaproszenia PNG wrzucaj do folderu zaproszenia/, np.:
-   zaproszenia/kacper.png
-   zaproszenia/ola.png
-   zaproszenia/hania.png
+Jeżeli pliku nie ma, użytkownik zostanie przekierowany na stronę 404.
 
-4. Linki do wysyłania:
-   https://TWOJ-LOGIN.github.io/invite-werka/?guest=kacper
-   https://TWOJ-LOGIN.github.io/invite-werka/?guest=ola
+Ważne:
+- pliki PNG wrzucaj do folderu zaproszenia/
+- nazwy bez spacji i polskich znaków, np. kacper.png, ola.png, ciocia_ania.png
+- parametr guest musi być dokładnie taki jak nazwa pliku bez .png
 
-5. Nadal działa też stary wariant:
-   https://TWOJ-LOGIN.github.io/invite-werka/?img=zaproszenia/kacper.png
-
-6. Opcjonalnie działa także ładniejszy wariant przez 404.html:
-   https://TWOJ-LOGIN.github.io/invite-werka/kacper
-   ale najpewniejszy wariant to ?guest=kacper.
-
-7. Jeżeli nie znajdzie zaproszenia PNG, strona pokaże domyślny plik zaproszenie.png.
+Przykłady:
+?guest=kacper -> zaproszenia/kacper.png
+?guest=ola -> zaproszenia/ola.png
+?guest=ciocia_ania -> zaproszenia/ciocia_ania.png

@@ -3,22 +3,41 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Przekierowanie…</title>
+  <title>Nie znaleziono zaproszenia</title>
+  <style>
+    body{
+      margin:0; min-height:100vh; display:grid; place-items:center; text-align:center;
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+      background: radial-gradient(circle at 20% 10%, #fff8d9, transparent 30%),
+                  radial-gradient(circle at 80% 20%, #ffd8f0, transparent 32%),
+                  linear-gradient(135deg,#dff7ff,#ffe6f7 55%,#fff3cf);
+      color:#6c3ba8;
+    }
+    .box{max-width:520px; padding:28px; margin:18px; border-radius:28px; background:rgba(255,255,255,.72); box-shadow:0 22px 70px rgba(91,55,135,.18); backdrop-filter:blur(10px)}
+    h1{font-size:clamp(30px,7vw,54px); margin:0 0 10px}
+    p{font-size:18px; line-height:1.5; margin:8px 0}
+    code{background:#fff; padding:3px 8px; border-radius:999px}
+    a{display:inline-block; margin-top:18px; color:#fff; background:#b76ef5; text-decoration:none; padding:12px 18px; border-radius:999px; font-weight:700}
+  </style>
 </head>
 <body>
-<script>
-(function(){
-  // Dla GitHub Pages: pozwala używać linków typu
-  // https://twoj-login.github.io/invite-werka/kacper
-  // zamiast ?guest=kacper. Standardowo polecam jednak ?guest=kacper.
-  var repo = '/invite-werka/';
-  var path = location.pathname;
-  var guest = '';
-  if (path.indexOf(repo) === 0) guest = path.slice(repo.length).split('/')[0];
-  guest = guest.replace(/[^a-zA-Z0-9_\-ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g, '');
-  var target = repo + (guest ? '?guest=' + encodeURIComponent(guest) : '');
-  location.replace(target);
-})();
-</script>
+  <main class="box">
+    <h1>404 🦄</h1>
+    <p>Nie znaleziono imiennego zaproszenia.</p>
+    <p id="hint"></p>
+    <a href="./">Wróć do strony głównej</a>
+  </main>
+  <script>
+    (function(){
+      var params = new URLSearchParams(location.search);
+      var guest = params.get('guest');
+      var hint = document.getElementById('hint');
+      if (guest) {
+        hint.innerHTML = 'Sprawdź, czy w folderze <code>zaproszenia/</code> istnieje plik <code>' + guest.replace(/[&<>"']/g,'') + '.png</code>.';
+      } else {
+        hint.innerHTML = 'Link powinien mieć format <code>?guest=kacper</code>.';
+      }
+    })();
+  </script>
 </body>
 </html>
