@@ -36,74 +36,40 @@
 
   const rawGuest = params.get('guest') || params.get('invite');
   const guest = safeName(rawGuest);
+  const guests = Array.isArray(window.GUESTS) ? window.GUESTS : [];
 
   if (!guest) {
     go404('missing-or-invalid-guest', rawGuest || '');
     return;
   }
 
-  const src = `zaproszenia/${guest}.png`;
-
-  async function validateAndLoadInvite() {
-    // v17: twarda walidacja pliku. Nie polegamy na <img onerror>, bo GitHub Pages
-    // czasem zwraca stronę 404 jako HTML, a przeglądarka/cache potrafi mylić test.
-    // Ładujemy plik przez fetch, sprawdzamy status oraz Content-Type i dopiero wtedy
-    // pokazujemy stronę. Brak pliku = natychmiast 404.
-    let res;
-    try {
-      res = await fetch(src + '?check=' + Date.now(), {
-        method: 'GET',
-        cache: 'no-store',
-        headers: { 'Accept': 'image/png,image/*;q=0.8,*/*;q=0.1' }
-      });
-    } catch (e) {
-      go404('invite-fetch-error', guest);
-      return;
-    }
-
-    const contentType = (res.headers.get('content-type') || '').toLowerCase();
-    if (!res.ok || !contentType.startsWith('image/')) {
-      go404('invite-not-found', guest);
-      return;
-    }
-
-    let blob;
-    try {
-      blob = await res.blob();
-    } catch (e) {
-      go404('invite-read-error', guest);
-      return;
-    }
-
-    if (!blob || !blob.type.toLowerCase().startsWith('image/')) {
-      go404('invite-not-image', guest);
-      return;
-    }
-
-    const objectUrl = URL.createObjectURL(blob);
-    const preload = new Image();
-
-    preload.onload = () => {
-      inviteImg.src = objectUrl;
-      inviteImg.classList.add('ready');
-      if (loading) loading.hidden = true;
-
-      const displayName = niceName(params.get('name') || guest);
-      if (displayName && greeting) {
-        greeting.textContent = `Cześć ${displayName}! ✨`;
-        greeting.classList.add('show');
-      }
-
-      showApp();
-    };
-
-    preload.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      go404('invite-image-error', guest);
-    };
-
-    preload.src = objectUrl;
+  // v18: walidujemy po liście gości, nie po istnieniu PNG.
+  // To jest stabilniejsze na GitHub Pages niż fetch/HEAD/onerror.
+  if (!guests.includes(guest)) {
+    go404('unknown-guest', guest);
+    return;
   }
 
-  validateAndLoadInvite();
+  const src = `zaproszenia/${guest}.png`;
+  const preload = new Image();
+
+  preload.onload = () => {
+    inviteImg.src = src;
+    inviteImg.classList.add('ready');
+    if (loading) loading.hidden = true;
+
+    const displayName = niceName(params.get('name') || guest);
+    if (displayName && greeting) {
+      greeting.textContent = `Cześć ${displayName}! ✨`;
+      greeting.classList.add('show');
+    }
+
+    showApp();
+  };
+
+  preload.onerror = () => {
+    go404('invite-file-missing', guest);
+  };
+
+  preload.src = src;
 })();
