@@ -3,22 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Przekierowanie…</title>
+  <title>Zaproszenie nie znalezione</title>
+  <style>
+    :root{--pink:#ea72b7;--purple:#7d4acd;--cream:#fff7ef;--blue:#bdefff;}
+    *{box-sizing:border-box}
+    body{
+      margin:0;min-height:100svh;display:grid;place-items:center;text-align:center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #fff 0, #ffe5f4 28%, transparent 45%),
+                  linear-gradient(135deg, #fdf3ec, #f7d9ff 45%, #c8efff);
+      color:#5f3b7a;padding:24px;
+    }
+    main{
+      width:min(520px, 100%);padding:32px 24px;border-radius:28px;background:rgba(255,255,255,.78);
+      box-shadow:0 24px 70px rgba(113,73,150,.18);backdrop-filter: blur(8px);
+      border:1px solid rgba(255,255,255,.8);
+    }
+    .icon{font-size:48px;margin-bottom:10px}
+    h1{font-size:clamp(24px,5vw,34px);margin:0 0 12px;color:var(--purple)}
+    p{font-size:17px;line-height:1.5;margin:0 auto 18px;max-width:36ch}
+    a{display:inline-block;margin-top:6px;padding:12px 18px;border-radius:999px;text-decoration:none;background:linear-gradient(135deg,var(--pink),var(--purple));color:white;font-weight:700;box-shadow:0 12px 26px rgba(125,74,205,.25)}
+  </style>
 </head>
 <body>
-<script>
-(function(){
-  // Dla GitHub Pages: pozwala używać linków typu
-  // https://twoj-login.github.io/invite-werka/kacper
-  // zamiast ?guest=kacper. Standardowo polecam jednak ?guest=kacper.
-  var repo = '/invite-werka/';
-  var path = location.pathname;
-  var guest = '';
-  if (path.indexOf(repo) === 0) guest = path.slice(repo.length).split('/')[0];
-  guest = guest.replace(/[^a-zA-Z0-9_\-ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g, '');
-  var target = repo + (guest ? '?guest=' + encodeURIComponent(guest) : '');
-  location.replace(target);
-})();
-</script>
+  <main>
+    <div class="icon">🦄</div>
+    <h1>Nie znaleziono zaproszenia</h1>
+    <p>Ten link jest nieprawidłowy albo zaproszenie dla tej osoby nie zostało jeszcze dodane.</p>
+    <a href="./">Wróć do strony głównej</a>
+  </main>
 </body>
 </html>
