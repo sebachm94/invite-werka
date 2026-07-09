@@ -17,8 +17,6 @@
   }
 
   function getBasePath() {
-    // GitHub Pages: /invite-werka/
-    // Lokalnie: ./
     if (location.pathname.startsWith(REPO_BASE)) return REPO_BASE;
     return './';
   }
@@ -27,7 +25,8 @@
     const query = new URLSearchParams();
     if (reason) query.set('reason', reason);
     if (guest) query.set('guest', guest);
-    location.replace(getBasePath() + '404.html?' + query.toString());
+    const base = getBasePath();
+    window.location.replace(base + '404.html?' + query.toString());
   }
 
   function showApp() {
@@ -35,9 +34,6 @@
     document.body.classList.add('app-ready');
   }
 
-  // ?guest=kacper => zaproszenia/kacper.png
-  // Dozwolone: litery, cyfry, myślnik i podkreślnik.
-  // Bez spacji, ukośników, polskich znaków i rozszerzenia.
   const rawGuest = params.get('guest') || params.get('invite');
   const guest = safeName(rawGuest);
 
@@ -48,22 +44,47 @@
 
   const src = `zaproszenia/${guest}.png`;
 
-  async function validateInvite() {
-    // Najpierw HEAD/fetch, żeby przy brakującym PNG NIE pokazywać normalnej strony.
-    // Potem Image preload, żeby mieć pewność, że to rzeczywiście obraz.
+  async function validateAndLoadInvite() {
+    // v17: twarda walidacja pliku. Nie polegamy na <img onerror>, bo GitHub Pages
+    // czasem zwraca stronę 404 jako HTML, a przeglądarka/cache potrafi mylić test.
+    // Ładujemy plik przez fetch, sprawdzamy status oraz Content-Type i dopiero wtedy
+    // pokazujemy stronę. Brak pliku = natychmiast 404.
+    let res;
     try {
-      const res = await fetch(src, { method: 'HEAD', cache: 'no-store' });
-      if (!res.ok) {
-        go404('invite-not-found', guest);
-        return;
-      }
+      res = await fetch(src + '?check=' + Date.now(), {
+        method: 'GET',
+        cache: 'no-store',
+        headers: { 'Accept': 'image/png,image/*;q=0.8,*/*;q=0.1' }
+      });
     } catch (e) {
-      // Niektóre środowiska lokalne mogą nie obsługiwać HEAD, więc robimy fallback przez Image.
+      go404('invite-fetch-error', guest);
+      return;
     }
 
+    const contentType = (res.headers.get('content-type') || '').toLowerCase();
+    if (!res.ok || !contentType.startsWith('image/')) {
+      go404('invite-not-found', guest);
+      return;
+    }
+
+    let blob;
+    try {
+      blob = await res.blob();
+    } catch (e) {
+      go404('invite-read-error', guest);
+      return;
+    }
+
+    if (!blob || !blob.type.toLowerCase().startsWith('image/')) {
+      go404('invite-not-image', guest);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(blob);
     const preload = new Image();
+
     preload.onload = () => {
-      inviteImg.src = src;
+      inviteImg.src = objectUrl;
       inviteImg.classList.add('ready');
       if (loading) loading.hidden = true;
 
@@ -75,11 +96,14 @@
 
       showApp();
     };
+
     preload.onerror = () => {
-      go404('invite-not-found', guest);
+      URL.revokeObjectURL(objectUrl);
+      go404('invite-image-error', guest);
     };
-    preload.src = src + '?v=' + Date.now();
+
+    preload.src = objectUrl;
   }
 
-  validateInvite();
+  validateAndLoadInvite();
 })();
