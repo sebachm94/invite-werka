@@ -6,6 +6,7 @@ window.GUESTS = [
   "demo",
   "kacper",
   "waszak",
+  "maly",
   "mariuszki",
   "klara",
   "antek",
